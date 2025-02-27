@@ -7,11 +7,11 @@
   </component>
   <component name="RunManager">
     <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="br.com.arthur.javafx.MainApp" />
+      <option name="MAIN_CLASS_NAME" value="br.com.coffemanager.javafx.MainApp" />
       <module name="javafx" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="br.com.arthur.javafx.*" />
+          <option name="PATTERN" value="br.com.coffemanager.javafx.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
