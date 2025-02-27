@@ -47,6 +47,26 @@ public class FXMLController implements Initializable {
         stage.show();
     }
     
+    @FXML
+    private void handleAtualizarQuantidade(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UpdateQtd.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        stage.setTitle("Atualizar Quantidade");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    @FXML
+    private void handleAtualizarProduto(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UpdateProd.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        stage.setTitle("Atualizar Produto");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

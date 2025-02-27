@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.arthur.javafx.UpdateProdController">
+    <Label text="Nome do Produto:" />
+    <TextField fx:id="nomeProdutoField" />
+    <Label text="Novo Nome (ou Deletar):" />
+    <TextField fx:id="novoNomeField" />
+    <HBox alignment="CENTER_RIGHT" spacing="10">
+        <Button text="Atualizar" onAction="#atualizarProduto"/>
+        <Button text="Deletar" onAction="#deletarProduto"/>
+        <Button text="Cancelar" onAction="#cancelar"/>
+    </HBox>
+</VBox>

@@ -11,35 +11,35 @@
 <AnchorPane id="AnchorPane" prefHeight="682.0" prefWidth="800.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.arthur.javafx.FXMLController">
     <children>
         <Label fx:id="lblOut" layoutX="347.0" layoutY="436.0" minHeight="16" minWidth="69" prefHeight="52.0" prefWidth="215.0" />
-      <TableView layoutX="174.0" layoutY="267.0" prefHeight="109.0" prefWidth="453.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="Ingrediente1" />
-          <TableColumn prefWidth="75.0" text="Ingrediente2" />
-            <TableColumn prefWidth="75.0" text="Ingrediente3" />
-            <TableColumn prefWidth="75.0" text="Ingrediente 4" />
-            <TableColumn prefWidth="75.0" text="Ingrediente 5" />
-            <TableColumn prefWidth="75.0" text="Ingrediente 6" />
-        </columns>
-      </TableView>
-      <Text layoutX="191.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerenciamento de estoque">
-         <font>
-            <Font size="35.0" />
-         </font>
-      </Text>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Voltar">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button layoutX="174.0" layoutY="411.0" mnemonicParsing="false" text="Atualizar quantidade">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button layoutX="491.0" layoutY="411.0" mnemonicParsing="false" text="Atualizar produto">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
+        <TableView layoutX="174.0" layoutY="267.0" prefHeight="109.0" prefWidth="453.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="Ingrediente1" />
+                <TableColumn prefWidth="75.0" text="Ingrediente2" />
+                <TableColumn prefWidth="75.0" text="Ingrediente3" />
+                <TableColumn prefWidth="75.0" text="Ingrediente 4" />
+                <TableColumn prefWidth="75.0" text="Ingrediente 5" />
+                <TableColumn prefWidth="75.0" text="Ingrediente 6" />
+            </columns>
+        </TableView>
+        <Text layoutX="191.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerenciamento de estoque">
+            <font>
+                <Font size="35.0" />
+            </font>
+        </Text>
+        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Voltar">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
+        <Button layoutX="174.0" layoutY="411.0" mnemonicParsing="false" text="Atualizar quantidade" onAction="#handleAtualizarQuantidade">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
+        <Button layoutX="491.0" layoutY="411.0" mnemonicParsing="false" text="Atualizar produto" onAction="#handleAtualizarProduto">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>
