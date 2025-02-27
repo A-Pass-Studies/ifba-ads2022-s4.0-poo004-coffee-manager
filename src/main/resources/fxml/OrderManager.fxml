@@ -31,12 +31,12 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="333.0" layoutY="447.0" mnemonicParsing="false" text="Adicionar pedido">
+      <Button layoutX="333.0" layoutY="447.0" mnemonicParsing="false" text="Adicionar pedido" onAction="#handleAdicionarPedido">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="337.0" layoutY="510.0" mnemonicParsing="false" text="Finalizar pedido">
+      <Button layoutX="337.0" layoutY="510.0" mnemonicParsing="false" text="Finalizar pedido" onAction="#handleFinalizarPedido">
          <font>
             <Font size="15.0" />
          </font>
