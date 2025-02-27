@@ -1,4 +1,4 @@
-package br.com.arthur.javafx;
+package br.com.coffemanager.javafx;
 /*
 Put header here
 
