@@ -5,13 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.com.coffemanager</groupId>
-	<artifactId>javafx</artifactId>
+	<artifactId>coffemanager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>javafx</name>
+	<name>coffemanager</name>
 
 	<properties>
+		<create-runtime-image>APP_WITH_DEPENDENCIES</create-runtime-image>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mainClass>br.com.coffemanager.App</mainClass>
 		<jfx-version>23.0.1</jfx-version>
@@ -80,18 +81,19 @@
 		<plugins>
 			<!-- adds file to let you run program outside of IDE -->
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
 						<phase>package</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<echo
 									file="${project.build.directory}/runme.bat">
 									start
 									jlink-image\bin\javaw -jar
 									modules\${project.artifactId}-${project.version}.jar</echo>
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
@@ -135,7 +137,7 @@
 			<plugin>
 				<groupId>org.moditect</groupId>
 				<artifactId>moditect-maven-plugin</artifactId>
-				<version>1.0.0.Beta2</version>
+				<version>1.2.2.Final</version>
 				<executions>
 					<execution>
 						<id>create-runtime-image</id>
@@ -148,16 +150,19 @@
 								<path>${project.build.directory}/modules</path>
 							</modulePath>
 							<modules>
+								<module>java.sql</module>
 								<module>${project.groupId}</module>
 							</modules>
+							<jarInclusionPolicy>APP_WITH_DEPENDENCIES</jarInclusionPolicy>
 							<launcher>
 								<name>${project.groupId}</name>
-
+								<mainClass>br.com.coffemanager.App</mainClass>
 							</launcher>
 							<compression>2</compression>
 							<stripDebug>true</stripDebug>
 							<outputDirectory>
-								${project.build.directory}/jlink-image</outputDirectory>
+								${project.build.directory}/jlink-image
+							</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>

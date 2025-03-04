@@ -1,4 +1,4 @@
-package br.com.arthur.javafx;
+package br.com.coffemanager.javafx;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
