@@ -17,7 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import java.io.IOException;
 
-public class FXMLController implements Initializable {
+public class MainController implements Initializable {
     
     @FXML
     private Label lblOut;
