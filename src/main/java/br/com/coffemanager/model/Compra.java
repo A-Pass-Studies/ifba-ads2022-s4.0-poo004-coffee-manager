@@ -46,6 +46,10 @@ public final class Compra {
 		return id;
 	}
 
+	public final void setId(final Long id) {
+		this.id = id;
+	}
+	
 	public final Item getItem() {
 		return item;
 	}

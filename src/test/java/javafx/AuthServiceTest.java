@@ -15,6 +15,6 @@ public class AuthServiceTest {
 		
 		auths.login(username, senha);
 		
-		assert AuthService.getUsuarioLogado() != null;
+		assert auths.getUsuarioLogado() != null;
 	}
 }

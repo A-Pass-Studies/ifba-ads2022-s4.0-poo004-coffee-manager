@@ -52,6 +52,14 @@ public class Item {
 	}
 
 	/**
+	 * 
+	 * @param id
+	 */
+	public void setId(final Long id) {
+		this.id = id;
+	}
+
+	/**
 	 * @return the descricao
 	 */
 	public final String getDescricao() {

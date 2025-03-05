@@ -1,134 +1,114 @@
 package br.com.coffemanager.data;
 
-import java.util.List;
-
 import br.com.coffemanager.data.connection.ConnectionFactory;
 import br.com.coffemanager.model.Usuario;
 import br.com.coffemanager.model.UsuarioTipo;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 // UsuarioDAO Implementation
-public class UsuarioDAO implements GenericDAO<Usuario, Long> {
-    private static UsuarioDAO instance;
-    private ConnectionFactory connectionF;
+public final class UsuarioDAO extends BaseDAO<Usuario, Long> {
+	private static UsuarioDAO instance;
 
-    private UsuarioDAO(final ConnectionFactory connectionFactory) {
-        this.connectionF = connectionFactory;
-        System.out.println("criou UsuárioDAO");
-    }
+	private final static String TABLE_NAME = "auth.usuarios";
+	private final static String ATTR_ID = "id";
+	private final static String ATTR_USERNAME = "username";
+	private final static String ATTR_NOME_COMPLETO = "nome_completo";
+	private final static String ATTR_SENHA = "senha";
+	private final static String ATTR_TIPO = "tipo";
+	private final static String ATTR_CRIADO_EM = "criado_em";
+	private final static String ATTR_ATUALIZADO_EM = "atualizado_em";
 
-    public static UsuarioDAO getInstance(final ConnectionFactory connectionFactory) {
-        if (instance == null) {
-            instance = new UsuarioDAO(connectionFactory);
-        }
-        return instance;
-    }
+	private UsuarioDAO(final ConnectionFactory connectionFactory) {
+		super(connectionFactory);
+	}
 
-    @Override
-    public void save(final Usuario usuario) throws SQLException {
-        String sql = "INSERT INTO auth.usuarios (username, nomeCompleto, senha, tipo) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = connectionF.getConnection().prepareStatement(sql)) {
-            stmt.setString(1, usuario.getUsername());
-            stmt.setString(2, usuario.getNomeCompleto());
-            stmt.setString(3, usuario.getSenha());
-            stmt.setString(4, usuario.getTipo().name());
-            stmt.executeUpdate();
-        }
-    }
-
-    @Override
-    public Usuario findById(final Long id) throws SQLException {
-        String sql = "SELECT * FROM auth.usuarios WHERE id = ?";
-        try (PreparedStatement stmt = connectionF.getConnection().prepareStatement(sql)) {
-            stmt.setLong(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return new Usuario(
-                    rs.getLong("id"),
-                    rs.getString("username"),
-                    rs.getString("nomeCompleto"),
-                    rs.getString("senha"),
-                    UsuarioTipo.valueOf(rs.getString("tipo")),
-                    rs.getTimestamp("criado_em").toLocalDateTime(),
-                    rs.getTimestamp("atualizado_em").toLocalDateTime()
-                );
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public List<Usuario> findAll() throws SQLException {
-        List<Usuario> usuarios = new ArrayList<>();
-        String sql = "SELECT * FROM auth.usuarios";
-        try (Statement stmt = connectionF.getConnection().createStatement()) {
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                usuarios.add(new Usuario(
-                    rs.getLong("id"),
-                    rs.getString("username"),
-                    rs.getString("nomeCompleto"),
-                    rs.getString("senha"),
-                    UsuarioTipo.valueOf(rs.getString("tipo")),
-                    rs.getTimestamp("criado_em").toLocalDateTime(),
-                    rs.getTimestamp("atualizado_em").toLocalDateTime()
-                ));
-            }
-        }
-        return usuarios;
-    }
-    @Override
-    public void update(Usuario usuario) throws SQLException {
-        String sql = "UPDATE auth.usuarios SET username = ?, senha = ?, tipo = ? WHERE id = ?";
-        try (PreparedStatement stmt = connectionF.getConnection().prepareStatement(sql)) {
-            stmt.setString(1, usuario.getUsername());
-            stmt.setString(2, usuario.getSenha());
-            stmt.setString(3, usuario.getTipo().name());
-            stmt.setLong(4, usuario.getId());
-            stmt.executeUpdate();
-        }
-    }
-
-    @Override
-    public void delete(Long id) throws SQLException {
-        String sql = "DELETE FROM auth.usuarios WHERE id = ?";
-        try (PreparedStatement stmt = connectionF.getConnection().prepareStatement(sql)) {
-            stmt.setLong(1, id);
-            stmt.executeUpdate();
-        }
-    }
+	public static UsuarioDAO getInstance(final ConnectionFactory connectionFactory) {
+		if (instance == null) {
+			instance = new UsuarioDAO(connectionFactory);
+		}
+		return instance;
+	}
 
 	public Usuario findByUserName(final String username) {
-		 String sql = "SELECT * FROM auth.usuarios WHERE username = ?";
-	        try (PreparedStatement stmt = connectionF.getConnection().prepareStatement(sql)) {
-	            stmt.setString(1, username);
+		String sql = "SELECT * FROM auth.usuarios WHERE username = ?";
+		try (final Connection conn = connFactory.getConnection();
+				final PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, username);
 
-	            ResultSet rs = stmt.executeQuery();
-
-	            if (rs.next()) {
-		            System.out.println(username);
-
-	                return new Usuario(
-	                    rs.getLong("id"),
-	                    rs.getString("username"),
-	                    rs.getString("nomeCompleto"),
-	                    rs.getString("senha"),
-	                    UsuarioTipo.valueOf(rs.getString("tipo")),
-	                    rs.getTimestamp("criado_em").toLocalDateTime(),
-	                    rs.getTimestamp("atualizado_em").toLocalDateTime()
-	                );
-	            }
-	        } catch (SQLException e) {
-
-				e.printStackTrace();
-				throw new RuntimeException(e);
-
-			} catch (Exception exception) {
-				throw exception;
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return createModel(rs);
 			}
-	        return null;
-		
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new RuntimeException(e);
+
+		} catch (Exception exception) {
+			throw exception;
+		}
+		return null;
+
+	}
+
+	@Override
+	List<String> getAttributes(final boolean withId) {
+		final ArrayList<String> attrs = new ArrayList<>();
+		if (withId) {
+			attrs.add(ATTR_ID);
+		}
+		attrs.add(ATTR_USERNAME);
+		attrs.add(ATTR_NOME_COMPLETO);
+		attrs.add(ATTR_SENHA);
+		attrs.add(ATTR_TIPO);
+		attrs.add(ATTR_CRIADO_EM);
+		attrs.add(ATTR_ATUALIZADO_EM);
+		return attrs;
+	}
+
+	@Override
+	String getTableName() {
+		return TABLE_NAME;
+	}
+
+	@Override
+	Usuario createModel(final ResultSet rs) throws SQLException {
+		return new Usuario(rs.getLong("id"), rs.getString("username"), rs.getString("nomeCompleto"),
+				rs.getString("senha"), UsuarioTipo.valueOf(rs.getString("tipo")),
+				rs.getTimestamp("criado_em").toLocalDateTime(), rs.getTimestamp("atualizado_em").toLocalDateTime());
+	}
+
+	@Override
+	void setId(final Usuario model, final Long id) {
+		model.setId(id);
+
+	}
+
+	@Override
+	void bindValues(final Usuario model, final PreparedStatement stmt) throws SQLException {
+		stmt.setString(1, model.getUsername());
+		stmt.setString(2, model.getSenha());
+		stmt.setString(3, model.getTipo().name());
+		stmt.setString(2, model.getNomeCompleto());
+		stmt.setString(3, model.getSenha());
+		stmt.setString(4, model.getTipo().name());
+	}
+
+	@Override
+	String getAttrId() {
+		return ATTR_ID;
+	}
+
+	@Override
+	void bindId(final Long id, final PreparedStatement stmt, final byte position) throws SQLException {
+		stmt.setLong(position, id);
+	}
+
+	@Override
+	void bindId(final PreparedStatement stmt, final Usuario model, final byte position) throws SQLException {
+		bindId(model.getId(), stmt, position);
 	}
 }
