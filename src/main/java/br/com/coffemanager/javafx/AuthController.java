@@ -40,7 +40,7 @@ public class AuthController implements Initializable {
         	
         	
         	try {
-                Parent tela2 = FXMLLoader.load(App.class.getResource("/fxml/home.fxml"));
+                Parent tela2 = FXMLLoader.load(App.class.getResource(Resources.MAIN.getResource()));
                 Scene scene = new Scene(tela2);
 
                 // Pegando a janela atual (Stage)
