@@ -6,8 +6,10 @@ enum Resources {
 	
 	AUTH("auth"),
 	MAIN("main"),
-	ITEM_MANAGER("item_manager");
-	
+	STOCK_MANAGER("stock_manager"),
+	BUY_MANAGER("buy_manager"),
+	REGISTER_ACC("register_acc"),
+	SALE_MANAGER("sale_manager");
 	
 	private final String filename;
 
@@ -16,6 +18,6 @@ enum Resources {
 	}
 	
 	String getResource() {
-		return String.format("%s %s %s", "fxml", File.pathSeparator, filename);
+		return String.format("%s%s%s", "/fxml/", filename, ".fxml");
 	}
 }
