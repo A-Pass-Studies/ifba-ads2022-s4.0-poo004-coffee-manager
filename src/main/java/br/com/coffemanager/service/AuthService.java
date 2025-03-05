@@ -9,7 +9,7 @@ public final class AuthService {
 
 	private final UsuarioDAO userDao;
 
-	private static Usuario logado;
+	private Usuario logado;
 
 	private AuthService(final UsuarioDAO userDao) {
 		this.userDao = userDao;
@@ -22,7 +22,7 @@ public final class AuthService {
 		return instance;
 	}
 
-	public boolean autenticar(final String username, final String senha) {
+	public boolean login(final String username, final String senha) {
 		System.out.println(username + senha);
 		final Usuario usuario = userDao.findByUserName(username);
 		System.out.println(usuario);
@@ -36,7 +36,15 @@ public final class AuthService {
 		return false;
 	}
 
-	public static Usuario getUsuarioLogado() {
+	public boolean estaLogado() {
+		return logado != null;
+	}
+	
+	public void logout() {
+		logado = null;
+	}
+	
+	public Usuario getUsuarioLogado() {
 		return logado;
 	}
 }

@@ -36,7 +36,7 @@ public class AuthController implements Initializable {
     
     @FXML
     private void btnClickAction(ActionEvent event) {
-        if (authService.autenticar(username.getText(), senha.getText())) {
+        if (authService.login(username.getText(), senha.getText())) {
         	
         	
         	try {

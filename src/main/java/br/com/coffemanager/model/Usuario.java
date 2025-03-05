@@ -4,22 +4,36 @@ import java.time.LocalDateTime;
 
 //User Model
 public class Usuario {
-	private final Long id;
+	private Long id;
 	private final String username;
 	private final String senha;
+	private final String nomeCompleto;
 	private final UsuarioTipo tipo;
 	private final LocalDateTime criadoEm;
 	private final LocalDateTime atualizadoEm;
 	
-	public Usuario(final Long id, final String username, final String senha, final UsuarioTipo tipo, final LocalDateTime criadoEm,
+	public Usuario(final Long id, final String username, 
+			final String nomeCompleto,
+			final String senha, final UsuarioTipo tipo, final LocalDateTime criadoEm,
 			final LocalDateTime atualizadoEm) {
-		super();
 		this.id = id;
 		this.username = username;
+		this.nomeCompleto = nomeCompleto;
 		this.senha = senha;
 		this.tipo = tipo;
 		this.criadoEm = criadoEm;
 		this.atualizadoEm = atualizadoEm;
+	}
+	
+	public Usuario(final String username, 
+			final String nomeCompleto,
+			final String senha, final UsuarioTipo tipo) {
+		this.username = username;
+		this.nomeCompleto = nomeCompleto;
+		this.senha = senha;
+		this.tipo = tipo;
+		this.criadoEm = LocalDateTime.now();
+		this.atualizadoEm = LocalDateTime.from(this.criadoEm);
 	}
 
 	public Long getId() {
@@ -30,6 +44,10 @@ public class Usuario {
 		return username;
 	}
 
+	public String getNomeCompleto() {
+		return nomeCompleto;
+	}
+	
 	public String getSenha() {
 		return senha;
 	}

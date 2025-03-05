@@ -10,12 +10,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 // UsuarioDAO Implementation
-public class UsuarioDAO implements GenericDAO<Usuario> {
+public class UsuarioDAO implements GenericDAO<Usuario, Long> {
     private static UsuarioDAO instance;
-    private ConnectionFactory connection;
+    private ConnectionFactory connectionF;
 
     private UsuarioDAO(final ConnectionFactory connectionFactory) {
-        this.connection = connectionFactory;
+        this.connectionF = connectionFactory;
         System.out.println("criou UsuárioDAO");
     }
 
@@ -27,26 +27,28 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
     }
 
     @Override
-    public void save(Usuario usuario) throws SQLException {
-        String sql = "INSERT INTO auth.usuarios (username, senha, tipo) VALUES (?, ?, ?)";
-        try (PreparedStatement stmt = connection.getConnection().prepareStatement(sql)) {
+    public void save(final Usuario usuario) throws SQLException {
+        String sql = "INSERT INTO auth.usuarios (username, nomeCompleto, senha, tipo) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = connectionF.getConnection().prepareStatement(sql)) {
             stmt.setString(1, usuario.getUsername());
-            stmt.setString(2, usuario.getSenha());
-            stmt.setString(3, usuario.getTipo().name());
+            stmt.setString(2, usuario.getNomeCompleto());
+            stmt.setString(3, usuario.getSenha());
+            stmt.setString(4, usuario.getTipo().name());
             stmt.executeUpdate();
         }
     }
 
     @Override
-    public Usuario findById(Long id) throws SQLException {
+    public Usuario findById(final Long id) throws SQLException {
         String sql = "SELECT * FROM auth.usuarios WHERE id = ?";
-        try (PreparedStatement stmt = connection.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement stmt = connectionF.getConnection().prepareStatement(sql)) {
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return new Usuario(
                     rs.getLong("id"),
                     rs.getString("username"),
+                    rs.getString("nomeCompleto"),
                     rs.getString("senha"),
                     UsuarioTipo.valueOf(rs.getString("tipo")),
                     rs.getTimestamp("criado_em").toLocalDateTime(),
@@ -61,12 +63,13 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
     public List<Usuario> findAll() throws SQLException {
         List<Usuario> usuarios = new ArrayList<>();
         String sql = "SELECT * FROM auth.usuarios";
-        try (Statement stmt = connection.getConnection().createStatement()) {
+        try (Statement stmt = connectionF.getConnection().createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 usuarios.add(new Usuario(
                     rs.getLong("id"),
                     rs.getString("username"),
+                    rs.getString("nomeCompleto"),
                     rs.getString("senha"),
                     UsuarioTipo.valueOf(rs.getString("tipo")),
                     rs.getTimestamp("criado_em").toLocalDateTime(),
@@ -79,7 +82,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
     @Override
     public void update(Usuario usuario) throws SQLException {
         String sql = "UPDATE auth.usuarios SET username = ?, senha = ?, tipo = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement stmt = connectionF.getConnection().prepareStatement(sql)) {
             stmt.setString(1, usuario.getUsername());
             stmt.setString(2, usuario.getSenha());
             stmt.setString(3, usuario.getTipo().name());
@@ -91,7 +94,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
     @Override
     public void delete(Long id) throws SQLException {
         String sql = "DELETE FROM auth.usuarios WHERE id = ?";
-        try (PreparedStatement stmt = connection.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement stmt = connectionF.getConnection().prepareStatement(sql)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         }
@@ -99,7 +102,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 
 	public Usuario findByUserName(final String username) {
 		 String sql = "SELECT * FROM auth.usuarios WHERE username = ?";
-	        try (PreparedStatement stmt = connection.getConnection().prepareStatement(sql)) {
+	        try (PreparedStatement stmt = connectionF.getConnection().prepareStatement(sql)) {
 	            stmt.setString(1, username);
 
 	            ResultSet rs = stmt.executeQuery();
@@ -110,6 +113,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 	                return new Usuario(
 	                    rs.getLong("id"),
 	                    rs.getString("username"),
+	                    rs.getString("nomeCompleto"),
 	                    rs.getString("senha"),
 	                    UsuarioTipo.valueOf(rs.getString("tipo")),
 	                    rs.getTimestamp("criado_em").toLocalDateTime(),

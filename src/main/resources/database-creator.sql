@@ -20,6 +20,7 @@ create type auth.usuario_tipo as enum ('ADMIN', 'GERENTE', 'ATENDENTE');
 create table auth.usuarios (
 	id bigserial not null primary key,
 	username varchar(149) not null,
+	nomeCompleto varchar(128) not null,
 	senha varchar(80) not null,
 	tipo auth.usuario_tipo not null,
 	criado_em timestamp default current_timestamp,
