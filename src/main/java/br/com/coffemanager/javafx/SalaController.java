@@ -3,6 +3,9 @@ package br.com.coffemanager.javafx;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
@@ -24,7 +27,7 @@ public class SalaController {
     @FXML
     private void handleVoltar(ActionEvent event) throws IOException {
         // Carrega o arquivo FXML da tela principal
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Resources.MAIN.getResource()));
         Scene scene = new Scene(loader.load());
 
         // Obtém o Stage (janela) atual

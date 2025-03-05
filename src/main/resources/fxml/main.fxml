@@ -22,17 +22,20 @@
       </Button>
       <VBox alignment="TOP_CENTER" layoutX="284.0" layoutY="253.0" spacing="16.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="231.0" text="Gerenciar Venda">
+            <Button mnemonicParsing="false" onAction="#handleGerenciarVenda" prefHeight="47.0" prefWidth="231.0" text="Gerenciar Venda">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="231.0" text="Gerenciar Compras">
+            <Button mnemonicParsing="false" onAction="#handleGerenciarCompras" prefHeight="47.0" prefWidth="231.0" text="Gerenciar Compras">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="231.0" text="Estoque" />
+            <Button mnemonicParsing="false" onAction="#handleEstoque" prefHeight="47.0" prefWidth="231.0" text="Estoque">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
          </children>
       </VBox>
     </children>
