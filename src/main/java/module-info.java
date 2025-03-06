@@ -4,6 +4,7 @@ module br.com.coffemanager {
     requires javafx.media;
 	requires java.sql;
 	requires javafx.graphics;
+	requires javafx.base;
     opens br.com.coffemanager.javafx to javafx.fxml;
     exports br.com.coffemanager.javafx;
     exports br.com.coffemanager;

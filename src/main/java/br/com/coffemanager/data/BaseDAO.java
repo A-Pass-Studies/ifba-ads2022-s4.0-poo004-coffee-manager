@@ -10,7 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 import br.com.coffemanager.data.connection.ConnectionFactory;
 import br.com.coffemanager.model.Usuario;
@@ -19,7 +21,7 @@ import br.com.coffemanager.model.UsuarioTipo;
 /**
  * 
  */
-abstract sealed class BaseDAO<T, TID> permits CompraDAO, UsuarioDAO, ItemDAO {
+abstract sealed class BaseDAO<T, TID> permits CompraDAO, UsuarioDAO, ItemDAO, VendaDAO, VendaItemDAO {
 
 	static ConnectionFactory connFactory;
 
@@ -28,18 +30,21 @@ abstract sealed class BaseDAO<T, TID> permits CompraDAO, UsuarioDAO, ItemDAO {
 	}
 
 	public void save(final T model) {
-		final String attrs = String.join(", ", getAttributes(false));
-		final CharSequence[] paramsChars = new CharSequence[attrs.length()];
-		Arrays.fill(paramsChars, '?');
+		final var attrs = getAttributes(false);
+		final String[] paramsChars = new String[attrs.size()];
+		Arrays.fill(paramsChars, "?");
 		String params = String.join(", ", paramsChars);
-		String sqlCompra = "INSERT INTO " + getTableName() + " (" + attrs + ") VALUES (" + params + ")";
+		String sqlCompra = "INSERT INTO " + getTableName() + " (" + attributesToSql(false) + ") VALUES (" + params
+				+ ")";
 
 		try (Connection conn = connFactory.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sqlCompra, Statement.RETURN_GENERATED_KEYS)) {
 
 			bindValues(model, pstmt);
 			pstmt.execute();
-			setId(model, pstmt.getGeneratedKeys().getLong(0));
+			final var generateId = pstmt.getGeneratedKeys();
+			generateId.next();
+			setId(model, pstmt.getGeneratedKeys().getLong(1));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -62,7 +67,29 @@ abstract sealed class BaseDAO<T, TID> permits CompraDAO, UsuarioDAO, ItemDAO {
 		return null;
 	}
 
-	public List<T> findAll(){
+	public List<T> findAll(final List<String> wheres, final Consumer<PreparedStatement> bindWhere) {
+		final String attrs = String.join(", ", getAttributes(true));
+
+		final String whereSql = String.join(" = ?", wheres);
+
+		final List<T> all = new ArrayList<T>();
+
+		String sql = "SELECT " + attrs + " FROM " + getTableName() + " WHERE " + whereSql + " = ?;";
+		try (final Connection conn = connFactory.getConnection();
+				final PreparedStatement stmt = conn.prepareStatement(sql)) {
+			bindWhere.accept(stmt);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				all.add(createModel(rs));
+			}
+			return all;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<T> findAll() {
 		List<T> models = new ArrayList<>();
 		final String attrs = String.join(", ", getAttributes(true));
 
@@ -102,9 +129,9 @@ abstract sealed class BaseDAO<T, TID> permits CompraDAO, UsuarioDAO, ItemDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	String attributesToSql() {
-		return String.join(", ", getAttributes(true));
+
+	String attributesToSql(final boolean withId) {
+		return String.join(", ", getAttributes(withId));
 	}
 
 	abstract List<String> getAttributes(final boolean withId);
@@ -114,7 +141,7 @@ abstract sealed class BaseDAO<T, TID> permits CompraDAO, UsuarioDAO, ItemDAO {
 	abstract T createModel(final ResultSet rs) throws SQLException;
 
 	abstract void setId(final T model, final Long id);
-	
+
 	abstract String getAttrId();
 
 	abstract void bindValues(final T model, final PreparedStatement stmt) throws SQLException;

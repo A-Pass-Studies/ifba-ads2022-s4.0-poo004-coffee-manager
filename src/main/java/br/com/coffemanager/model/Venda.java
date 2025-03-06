@@ -5,36 +5,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Venda {
-	private final Long id;
-	private final Long cadastroUsuarioId;
+	private Long id;
+	private final Usuario cadastroUsuario;
 	private final LocalDateTime criadoEm;
 	
 	private final List<VendaItem> itens;
 
 	/**
 	 * @param id
-	 * @param cadastroUsuarioId
+	 * @param cadastroUsuario
 	 * @param criadoEm
 	 */
-	public Venda(final Long id, final List<VendaItem> itens, final Long cadastroUsuarioId, final LocalDateTime criadoEm) {
+	public Venda(final Long id, final List<VendaItem> itens, final Usuario cadastroUsuario, final LocalDateTime criadoEm) {
 		this.id = id;
-		this.cadastroUsuarioId = cadastroUsuarioId;
+		this.cadastroUsuario = cadastroUsuario;
 		this.criadoEm = criadoEm;
 		this.itens = itens;
 	}
 
 	/**
-	 * @param cadastroUsuarioId
+	 * @param cadastroUsuario
 	 */
-	public Venda(final Long cadastroUsuarioId) {
+	public Venda(final Usuario cadastroUsuario) {
 		this.id = null;
 		this.itens = new ArrayList<>();
-		this.cadastroUsuarioId = cadastroUsuarioId;
+		this.cadastroUsuario = cadastroUsuario;
 		this.criadoEm = LocalDateTime.now();
 	}
 
-	public final void addItem(final Item item, final int qtd) {
-		this.itens.add(new VendaItem(item, qtd));
+	public final VendaItem addItem(final Item item, final int qtd) {
+		final var vitem = new VendaItem(item, qtd);
+		this.itens.add(vitem);
+		return vitem;
 	}
 
 	/**
@@ -43,12 +45,16 @@ public final class Venda {
 	public final Long getId() {
 		return id;
 	}
+	
+	public final void setId(final Long newId) {
+		this.id = newId;
+	}
 
 	/**
 	 * @return the cadastroUsuarioId
 	 */
-	public final Long getCadastroUsuarioId() {
-		return cadastroUsuarioId;
+	public final Usuario getCadastroUsuario() {
+		return cadastroUsuario;
 	}
 
 	/**

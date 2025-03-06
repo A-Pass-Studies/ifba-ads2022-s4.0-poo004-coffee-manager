@@ -26,7 +26,7 @@ public class StockController {
     @FXML
     private void handleVoltar(ActionEvent event) throws IOException {
         // Carrega o arquivo FXML da tela principal
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Resources.MAIN.getResource()));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Resources.MAIN.getFXMLResource()));
         Scene scene = new Scene(loader.load());
 
         // Obtém o Stage (janela) atual

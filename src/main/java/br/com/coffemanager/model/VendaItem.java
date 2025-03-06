@@ -5,33 +5,30 @@ import java.math.BigDecimal;
 //VendaItem Model
 public class VendaItem {
 	private Long vendaId;
-	private Item item;
-	private int qtd;
-	private BigDecimal valorUnitarioVenda;
+	private final Item item;
+	private final int qtd;
+	private final BigDecimal valorUnitarioVenda;
 
+	
+	
 	/**
 	 * @param vendaId
-	 * @param itemId
+	 * @param item
 	 * @param qtd
 	 * @param valorUnitarioVenda
 	 */
-	public VendaItem(Long vendaId, final Item item, final int qtd, final BigDecimal valorUnitarioVenda) {
+	public VendaItem(final Long vendaId, final Item item, final int qtd, final BigDecimal valorUnitarioVenda) {
 		this.vendaId = vendaId;
 		this.item = item;
 		this.qtd = qtd;
 		this.valorUnitarioVenda = valorUnitarioVenda;
 	}
 
-	/**
-	 * @param itemId
-	 * @param qtd
-	 */
-	public VendaItem(final Item item, int qtd) {
+	public VendaItem(final Item item, final int qtd) {
 		this.item = item;
 		this.qtd = qtd;
 		this.valorUnitarioVenda = item.getValorVendaAtual();
 	}
-
 
 	/**
 	 * @return the vendaId
@@ -40,10 +37,14 @@ public class VendaItem {
 		return vendaId;
 	}
 
+	public final void setVendaId(final Long vendaId) {
+		this.vendaId = vendaId;
+	}
+	
 	/**
 	 * @return the itemId
 	 */
-	public final Item getItemId() {
+	public final Item getItem() {
 		return item;
 	}
 

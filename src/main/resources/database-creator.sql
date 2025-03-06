@@ -65,6 +65,7 @@ create table movimento.compras (
 	qtd integer not null,
 	data_compra date not null,
 	vencimento date null,
+	nf_cupom_cod varchar(128) null,
 	cadastro_usuario_id bigint not null,
 	criado_em timestamp not null default current_timestamp,
 	atualizado_em timestamp not null default current_timestamp,

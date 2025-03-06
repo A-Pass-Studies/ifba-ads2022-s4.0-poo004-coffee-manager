@@ -23,6 +23,7 @@ public final class CompraDAO extends BaseDAO<Compra, Long> {
 	private final String ATTR_QTD = "qtd";
 	private final String ATTR_DATA_COMPRA = "data_compra";
 	private final String ATTR_VENCIMENTO = "vencimento";
+	private final String ATTR_NF_CUPOM_COD = "nf_cupom_cod";
 	private final String ATTR_CADASTRO_USUARIO = "cadastro_usuario_id";
 	private final String ATTR_CRIADO_EM = "criado_em";
 	private final String ATTR_ATUALIZADO_EM = "atualizado_em";
@@ -52,6 +53,7 @@ public final class CompraDAO extends BaseDAO<Compra, Long> {
 		attrs.add(ATTR_QTD);
 		attrs.add(ATTR_DATA_COMPRA);
 		attrs.add(ATTR_VENCIMENTO);
+		attrs.add(ATTR_NF_CUPOM_COD);
 		attrs.add(ATTR_CADASTRO_USUARIO);
 		attrs.add(ATTR_CRIADO_EM);
 		attrs.add(ATTR_ATUALIZADO_EM);
@@ -71,7 +73,10 @@ public final class CompraDAO extends BaseDAO<Compra, Long> {
 		stmt.setInt(3, model.getQtd());
 		stmt.setDate(4, java.sql.Date.valueOf(model.getDataCompra()));
 		stmt.setDate(5, java.sql.Date.valueOf(model.getVencimento()));
-		stmt.setLong(6, model.getUsuarioCadastro().getId());
+		stmt.setString(6, model.getNfCupomCod());
+		stmt.setLong(7, model.getUsuarioCadastro().getId());
+		stmt.setTimestamp(8, java.sql.Timestamp.valueOf(model.getCriadoEm()));
+		stmt.setTimestamp(9, java.sql.Timestamp.valueOf(model.getAtualizadoEm()));
 	}
 
 	@Override

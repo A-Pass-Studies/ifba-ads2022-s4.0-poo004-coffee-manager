@@ -21,46 +21,31 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class AuthController implements Initializable {
-    
-    @FXML
-    private Label lblOut;
-    
-    @FXML
-    private TextField username;
-    
-    @FXML
-    private TextField senha;
-    
-    
-    private final AuthService authService = App.getAuthService();
-    
-    @FXML
-    private void btnClickAction(ActionEvent event) {
-        if (authService.login(username.getText(), senha.getText())) {
-        	
-        	
-        	try {
-                Parent tela2 = FXMLLoader.load(App.class.getResource(Resources.MAIN.getResource()));
-                Scene scene = new Scene(tela2);
 
-                // Pegando a janela atual (Stage)
-                Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	@FXML
+	private Label lblOut;
 
-                stage.setScene(scene);
-                stage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-   
-        }
-        
-        else {
-        	lblOut.setText("Autenticação falhou. Tente novamente...");
-        }
-    }
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+	@FXML
+	private TextField username;
+
+	@FXML
+	private TextField senha;
+
+	private final AuthService authService = App.getAuthService();
+
+	@FXML
+	private void btnClickAction(ActionEvent event) {
+		if (authService.login(username.getText(), senha.getText())) {
+			Navigator.getInstance().navigateTo(Resources.MAIN);
+		}
+
+		else {
+			lblOut.setText("Autenticação falhou. Tente novamente...");
+		}
+	}
+
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		// TODO
+	}
 }
