@@ -1,29 +1,33 @@
 package br.com.coffemanager.javafx;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
 
 import br.com.coffemanager.App;
+import br.com.coffemanager.data.CompraDAO;
 import br.com.coffemanager.data.ItemDAO;
 import br.com.coffemanager.model.Item;
+import br.com.coffemanager.service.ComprasService;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public final class BuyController {
 
 	private final ItemDAO itemDAO = App.getItemDAO();
+
+	private final CompraDAO compraDAO = App.getCompraDAO();
+
+	private final ComprasService compraServ = App.getCompraService();
 
 	private final Navigator nav = Navigator.getInstance();
 
@@ -48,12 +52,36 @@ public final class BuyController {
 	@FXML
 	private Button buttonConfirmar;
 
+	@FXML
+	private TableView<CompraTableView> tabelaCompras;
+
+	@FXML
+	private TableColumn<CompraTableView, Long> tableComprasColItem;
+
+	@FXML
+	private TableColumn<CompraTableView, String> tableComprasColValorUnitario;
+
+	@FXML
+	private TableColumn<CompraTableView, Integer> tableComprasColQtd;
+
+	@FXML
+	private TableColumn<CompraTableView, String> tableComprasColNF;
+
 	public void initialize() {
 		// Inicialize o ChoiceBox com alguns produtos (exemplo)
 		final List<ItemChoiceBox> itens = itemDAO.findAll().stream().map(ItemChoiceBox::new).toList();
 		choiceBoxProduto.getItems().addAll(itens);
 
 		textFieldValor.textProperty().addListener(new DinheiroFieldFormat());
+
+		final var compras = compraDAO.findAll();
+
+		tableComprasColItem.setCellValueFactory(new PropertyValueFactory<>("itemId"));
+		tableComprasColValorUnitario.setCellValueFactory(new PropertyValueFactory<>("valorUnitario"));
+		tableComprasColQtd.setCellValueFactory(new PropertyValueFactory<>("qtd"));
+		tableComprasColNF.setCellValueFactory(new PropertyValueFactory<>("nf"));
+
+		tabelaCompras.setItems(FXCollections.observableList(compras.stream().map(CompraTableView::new).toList()));
 	}
 
 	@FXML
@@ -70,15 +98,19 @@ public final class BuyController {
 	@FXML
 	private void handleConfirmar(ActionEvent event) {
 
-		// Lógica para confirmar a adição de um produto
-		Item produto = choiceBoxProduto.getValue().getItem();
-		String valor = textFieldValor.getText();
-		String quantidade = textFieldQuantidade.getText();
-		String nota = textFieldNota.getText();
+		try {
+			final Item produto = choiceBoxProduto.getValue().getItem();
 
-		System.out.println("Produto: " + produto.getDescricao());
-		System.out.println("Valor: " + valor);
-		System.out.println("Quantidade: " + quantidade);
-		System.out.println("Nota: " + nota);
+			final var valor = new BigDecimal(
+					NumberFormat.getCurrencyInstance().parse(textFieldValor.getText()).doubleValue());
+			final var quantidade = Integer.parseInt(textFieldQuantidade.getText());
+			String nota = textFieldNota.getText();
+
+			compraServ.adicionarRegistroDeCompra(produto, valor, quantidade, nota);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

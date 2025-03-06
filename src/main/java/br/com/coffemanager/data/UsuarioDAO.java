@@ -33,7 +33,7 @@ public final class UsuarioDAO extends BaseDAO<Usuario, Long> {
 	}
 
 	public Usuario findByUserName(final String username) {
-		String sql = "SELECT " + attributesToSql() + " FROM " + getTableName() + " WHERE " + ATTR_USERNAME + " = ?";
+		String sql = "SELECT " + attributesToSql(true) + " FROM " + getTableName() + " WHERE " + ATTR_USERNAME + " = ?";
 		try (final Connection conn = connFactory.getConnection();
 				final PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, username);

@@ -28,6 +28,7 @@ final class Navigator {
             final var stage = App.getStage();
             	
             stage.setScene(scene);
+            stage.setTitle(res.getTitle());
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

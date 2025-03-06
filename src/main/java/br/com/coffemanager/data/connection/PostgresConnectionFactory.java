@@ -32,7 +32,6 @@ public final class PostgresConnectionFactory implements ConnectionFactory {
 				final String user = "postgres";
 				final String password = "postgres";
 				connection = DriverManager.getConnection(url, user, password);
-				System.out.println("conexão bem sucessida");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

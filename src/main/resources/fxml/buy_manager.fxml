@@ -13,12 +13,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="682.0" prefWidth="800.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.coffemanager.javafx.BuyController">
     <children>
-      <TableView layoutX="99.0" layoutY="270.0" prefHeight="325.0" prefWidth="602.0">
+      <TableView fx:id="tabelaCompras" layoutX="99.0" layoutY="270.0" prefHeight="325.0" prefWidth="602.0">
         <columns>
-          <TableColumn prefWidth="184.0" text="Nome" />
-            <TableColumn prefWidth="184.0" text="Tipo" />
-            <TableColumn minWidth="0.0" prefWidth="107.0" text="Quantidade" />
-            <TableColumn prefWidth="126.0" text="Valor" />
+          <TableColumn fx:id="tableComprasColItem" prefWidth="184.0" text="Item" />
+            <TableColumn fx:id="tableComprasColValorUnitario" prefWidth="184.0" text="Valor Unitario" />
+            <TableColumn fx:id="tableComprasColQtd" minWidth="0.0" prefWidth="107.0" text="Quantidade" />
+            <TableColumn fx:id="tableComprasColNF" prefWidth="126.0" text="NF/Cupom/Cod." />
         </columns>
       </TableView>
       <Text layoutX="187.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerenciamento de compras">
@@ -47,18 +47,18 @@
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade" />
-                        <TextField alignment="TOP_CENTER" prefHeight="25.0" prefWidth="116.0" />
+                        <TextField id="textFieldQuantidade" fx:id="textFieldQuantidade" alignment="TOP_CENTER" prefHeight="25.0" prefWidth="116.0" />
                      </children>
                   </VBox>
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="NF/Cupom" />
-                        <TextField alignment="TOP_CENTER" prefHeight="25.0" prefWidth="116.0" />
+                        <TextField fx:id="textFieldNota" alignment="TOP_CENTER" prefHeight="25.0" prefWidth="116.0" />
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="134.0" text="Confirmar" />
+            <Button mnemonicParsing="false" onAction="#handleConfirmar" prefHeight="32.0" prefWidth="134.0" text="Salvar" />
          </children>
       </VBox>
     </children>

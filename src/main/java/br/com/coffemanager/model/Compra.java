@@ -6,19 +6,20 @@ import java.time.LocalDateTime;
 
 public final class Compra {
 	private Long id;
-	private Item item;
-	private BigDecimal valorUnitario;
-	private int qtd;
-	private LocalDate dataCompra;
-	private LocalDate vencimento;
-	private Usuario cadastroUsuario;
-	private LocalDateTime criadoEm;
+	private final Item item;
+	private final BigDecimal valorUnitario;
+	private final int qtd;
+	private final LocalDate dataCompra;
+	private final LocalDate vencimento;
+	private String nfCupomCod;
+	private final Usuario cadastroUsuario;
+	private final LocalDateTime criadoEm;
 	private LocalDateTime atualizadoEm;
 
 	public Compra(final Long id, final Item item, final BigDecimal valorUnitario, final int qtd,
 			final LocalDate dataCompra, final LocalDate vencimento, final Usuario cadastroUsuario,
 			final LocalDateTime criadoEm, final LocalDateTime atualizadoEm) {
-		
+
 		this.id = id;
 		this.item = item;
 		this.valorUnitario = valorUnitario;
@@ -49,7 +50,7 @@ public final class Compra {
 	public final void setId(final Long id) {
 		this.id = id;
 	}
-	
+
 	public final Item getItem() {
 		return item;
 	}
@@ -68,6 +69,27 @@ public final class Compra {
 
 	public final LocalDate getVencimento() {
 		return vencimento;
+	}
+
+	/**
+	 * @return the nfCupomCod
+	 */
+	public final String getNfCupomCod() {
+		return nfCupomCod;
+	}
+
+	/**
+	 * @param nfCupomCod the nfCupomCod to set
+	 */
+	public final void setNfCupomCod(final String nfCupomCod) {
+		this.nfCupomCod = nfCupomCod;
+	}
+
+	/**
+	 * @return the cadastroUsuario
+	 */
+	public final Usuario getCadastroUsuario() {
+		return cadastroUsuario;
 	}
 
 	public final Usuario getUsuarioCadastro() {
