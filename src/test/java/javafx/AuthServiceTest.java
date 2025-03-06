@@ -13,8 +13,8 @@ public class AuthServiceTest {
 		var username = "admin";
 		var senha = "admin123";
 		
-		auths.autenticar(username, senha);
+		auths.login(username, senha);
 		
-		assert AuthService.getUsuarioLogado() != null;
+		assert auths.getUsuarioLogado() != null;
 	}
 }
