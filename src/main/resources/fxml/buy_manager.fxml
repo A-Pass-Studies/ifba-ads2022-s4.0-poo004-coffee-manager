@@ -5,6 +5,9 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -13,52 +16,100 @@
 
 <AnchorPane id="AnchorPane" prefHeight="682.0" prefWidth="800.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.coffemanager.javafx.BuyController">
     <children>
-      <TableView layoutX="99.0" layoutY="270.0" prefHeight="325.0" prefWidth="602.0">
+      <TableView layoutX="99.0" layoutY="270.0" prefHeight="325.0" prefWidth="602.0" style="-fx-background-color: white;">
         <columns>
-          <TableColumn prefWidth="184.0" text="Nome" />
-            <TableColumn prefWidth="184.0" text="Tipo" />
-            <TableColumn minWidth="0.0" prefWidth="107.0" text="Quantidade" />
-            <TableColumn prefWidth="126.0" text="Valor" />
+          <TableColumn prefWidth="184.0" style="-fx-background-color: #f0f0f0;" text="Nome" />
+            <TableColumn prefWidth="184.0" style="-fx-background-color: #f0f0f0;" text="Tipo" />
+            <TableColumn minWidth="0.0" prefWidth="107.0" style="-fx-background-color: #f0f0f0;" text="Quantidade" />
+            <TableColumn prefWidth="126.0" style="-fx-background-color: #f0f0f0;" text="Valor" />
         </columns>
       </TableView>
-      <Text layoutX="187.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerenciamento de compras">
+      <Text layoutX="187.0" layoutY="78.0" stroke="BLACK" strokeType="OUTSIDE" text="Gerenciamento de compras">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <Button layoutX="36.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleVoltar" prefHeight="32.0" prefWidth="67.0" text="Voltar">
+      <Button layoutX="30.0" layoutY="38.0" mnemonicParsing="false" onAction="#handleVoltar" prefHeight="32.0" prefWidth="73.0" text="Voltar">
          <font>
             <Font size="15.0" />
          </font>
+         <effect>
+            <Lighting diffuseConstant="1.18" specularExponent="24.6">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
       </Button>
-      <Button layoutX="322.0" layoutY="614.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="134.0" text="Deletar compra" />
+      <Button layoutX="322.0" layoutY="614.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="134.0" text="Deletar compra">
+         <effect>
+            <Lighting diffuseConstant="1.18" specularExponent="24.14">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+         <font>
+            <Font size="15.0" />
+         </font></Button>
       <VBox layoutX="100.0" layoutY="105.0" prefHeight="140.0" prefWidth="602.0" spacing="8.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Produto" />
-            <ChoiceBox fx:id="choiceBoxProduto" prefHeight="25.0" prefWidth="619.0" VBox.vgrow="ALWAYS" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Produto">
+               <font>
+                  <Font size="15.0" />
+               </font></Text>
+            <ChoiceBox fx:id="choiceBoxProduto" prefHeight="25.0" prefWidth="619.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS" />
             <HBox prefHeight="42.0" prefWidth="478.0" spacing="8.0">
                <children>
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valor Unitário" />
-                        <TextField alignment="TOP_CENTER" prefHeight="25.0" prefWidth="116.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valor Unitário">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Text>
+                        <TextField alignment="TOP_CENTER" prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: white;" />
                      </children>
                   </VBox>
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade" />
-                        <TextField alignment="TOP_CENTER" prefHeight="25.0" prefWidth="116.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Text>
+                        <TextField alignment="TOP_CENTER" prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: white;" />
                      </children>
                   </VBox>
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="NF/Cupom" />
-                        <TextField alignment="TOP_CENTER" prefHeight="25.0" prefWidth="116.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="NF/Cupom">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Text>
+                        <TextField alignment="TOP_CENTER" prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: white;" />
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="134.0" text="Confirmar" />
+            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="134.0" text="Confirmar">
+               <effect>
+                  <Lighting diffuseConstant="1.18" specularExponent="24.14">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
          </children>
       </VBox>
     </children>
