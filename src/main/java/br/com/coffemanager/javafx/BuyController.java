@@ -10,78 +10,75 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import br.com.coffemanager.App;
 import br.com.coffemanager.data.ItemDAO;
-import br.com.coffemanager.javafx.components.ItemChoiceBox;
 import br.com.coffemanager.model.Item;
 
-public class BuyController {
+public final class BuyController {
 
 	private final ItemDAO itemDAO = App.getItemDAO();
-	
-    @FXML
-    private ChoiceBox<ItemChoiceBox> choiceBoxProduto;
 
-    @FXML
-    private TextField textFieldValor;
+	private final Navigator nav = Navigator.getInstance();
 
-    @FXML
-    private TextField textFieldQuantidade;
+	@FXML
+	private ChoiceBox<ItemChoiceBox> choiceBoxProduto;
 
-    @FXML
-    private TextField textFieldNota;
+	@FXML
+	private TextField textFieldValor;
 
-    @FXML
-    private Button buttonVoltar;
+	@FXML
+	private TextField textFieldQuantidade;
 
-    @FXML
-    private Button buttonDeletarCompra;
+	@FXML
+	private TextField textFieldNota;
 
-    @FXML
-    private Button buttonConfirmar;
+	@FXML
+	private Button buttonVoltar;
 
-    public void initialize() {
-        // Inicialize o ChoiceBox com alguns produtos (exemplo)
-    	final List<ItemChoiceBox> itens = itemDAO.findAll().stream().map(ItemChoiceBox::new).toList();
-        choiceBoxProduto.getItems().addAll(itens);
-    }
+	@FXML
+	private Button buttonDeletarCompra;
 
-    @FXML
-    private void handleVoltar(ActionEvent event) throws IOException {
-        // Carrega o arquivo FXML da tela principal
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Resources.MAIN.getResource()));
-        Scene scene = new Scene(loader.load());
+	@FXML
+	private Button buttonConfirmar;
 
-        // Obtém o Stage (janela) atual
-        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	public void initialize() {
+		// Inicialize o ChoiceBox com alguns produtos (exemplo)
+		final List<ItemChoiceBox> itens = itemDAO.findAll().stream().map(ItemChoiceBox::new).toList();
+		choiceBoxProduto.getItems().addAll(itens);
 
-        // Define a nova cena e exibe
-        stage.setScene(scene);
-        stage.setTitle("Tela Principal"); // Define o título da janela
-        stage.show();
-    }
+		textFieldValor.textProperty().addListener(new DinheiroFieldFormat());
+	}
 
-    @FXML
-    private void handleDeletarCompra(ActionEvent event) {
-        // Lógica para deletar uma compra
-        System.out.println("Compra deletada!");
-    }
+	@FXML
+	private void handleVoltar(ActionEvent event) throws IOException {
+		nav.navigateTo(Resources.MAIN);
+	}
 
-    @FXML
-    private void handleConfirmar(ActionEvent event) {
-        // Lógica para confirmar a adição de um produto
-        Item produto = choiceBoxProduto.getValue().getItem();
-        String valor = textFieldValor.getText();
-        String quantidade = textFieldQuantidade.getText();
-        String nota = textFieldNota.getText();
+	@FXML
+	private void handleDeletarCompra(ActionEvent event) {
+		// Lógica para deletar uma compra
+		System.out.println("Compra deletada!");
+	}
 
-        System.out.println("Produto: " + produto.getDescricao());
-        System.out.println("Valor: " + valor);
-        System.out.println("Quantidade: " + quantidade);
-        System.out.println("Nota: " + nota);
-    }
+	@FXML
+	private void handleConfirmar(ActionEvent event) {
+
+		// Lógica para confirmar a adição de um produto
+		Item produto = choiceBoxProduto.getValue().getItem();
+		String valor = textFieldValor.getText();
+		String quantidade = textFieldQuantidade.getText();
+		String nota = textFieldNota.getText();
+
+		System.out.println("Produto: " + produto.getDescricao());
+		System.out.println("Valor: " + valor);
+		System.out.println("Quantidade: " + quantidade);
+		System.out.println("Nota: " + nota);
+	}
 }

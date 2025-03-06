@@ -7,7 +7,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.util.function.Consumer;
 
 import br.com.coffemanager.data.ItemDAO;
 import br.com.coffemanager.data.UsuarioDAO;
@@ -35,6 +38,10 @@ public final class App extends Application {
 		stage.show();
 	}
 
+	public static final Stage getStage() {
+		return stage;
+	}
+
 	private static Parent loadFXML(String fxml) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml"));
 		return fxmlLoader.load();
@@ -43,21 +50,20 @@ public final class App extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	public final static ConnectionFactory getConnectionFactory() {
 		return PostgresConnectionFactory.getInstance();
 	}
-	
+
 	public final static UsuarioDAO getUsuarioDAO() {
 		return UsuarioDAO.getInstance(getConnectionFactory());
 	}
-	
+
 	public final static ItemDAO getItemDAO() {
 		return ItemDAO.getInstance(getConnectionFactory(), getUsuarioDAO());
 	}
-	
+
 	public final static AuthService getAuthService() {
 		return AuthService.getInstance(getUsuarioDAO());
 	}
-
 }

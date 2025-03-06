@@ -1,18 +1,18 @@
-package br.com.coffemanager.javafx.components;
+package br.com.coffemanager.javafx;
 
 import java.util.Objects;
 
 import br.com.coffemanager.model.Item;
 
-public final class ItemChoiceBox {
+final class ItemChoiceBox {
 
 	private final Item item;
 
-	public ItemChoiceBox(final Item item) {
+	ItemChoiceBox(final Item item) {
 		this.item = item;
 	}
 
-	public final Item getItem() {
+	final Item getItem() {
 		return item;
 	}
 
