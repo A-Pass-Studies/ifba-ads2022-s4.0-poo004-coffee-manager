@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import br.com.coffemanager.data.ItemDAO;
 import br.com.coffemanager.data.UsuarioDAO;
 import br.com.coffemanager.data.connection.ConnectionFactory;
 import br.com.coffemanager.data.connection.PostgresConnectionFactory;
@@ -49,6 +50,10 @@ public final class App extends Application {
 	
 	public final static UsuarioDAO getUsuarioDAO() {
 		return UsuarioDAO.getInstance(getConnectionFactory());
+	}
+	
+	public final static ItemDAO getItemDAO() {
+		return ItemDAO.getInstance(getConnectionFactory(), getUsuarioDAO());
 	}
 	
 	public final static AuthService getAuthService() {

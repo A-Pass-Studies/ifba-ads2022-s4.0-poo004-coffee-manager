@@ -33,7 +33,7 @@ public final class UsuarioDAO extends BaseDAO<Usuario, Long> {
 	}
 
 	public Usuario findByUserName(final String username) {
-		String sql = "SELECT * FROM auth.usuarios WHERE username = ?";
+		String sql = "SELECT " + attributesToSql() + " FROM " + getTableName() + " WHERE " + ATTR_USERNAME + " = ?";
 		try (final Connection conn = connFactory.getConnection();
 				final PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, username);
@@ -76,9 +76,9 @@ public final class UsuarioDAO extends BaseDAO<Usuario, Long> {
 
 	@Override
 	Usuario createModel(final ResultSet rs) throws SQLException {
-		return new Usuario(rs.getLong("id"), rs.getString("username"), rs.getString("nomeCompleto"),
-				rs.getString("senha"), UsuarioTipo.valueOf(rs.getString("tipo")),
-				rs.getTimestamp("criado_em").toLocalDateTime(), rs.getTimestamp("atualizado_em").toLocalDateTime());
+		return new Usuario(rs.getLong(ATTR_ID), rs.getString(ATTR_USERNAME), rs.getString(ATTR_NOME_COMPLETO),
+				rs.getString(ATTR_SENHA), UsuarioTipo.valueOf(rs.getString(ATTR_TIPO)),
+				rs.getTimestamp(ATTR_CRIADO_EM).toLocalDateTime(), rs.getTimestamp(ATTR_ATUALIZADO_EM).toLocalDateTime());
 	}
 
 	@Override

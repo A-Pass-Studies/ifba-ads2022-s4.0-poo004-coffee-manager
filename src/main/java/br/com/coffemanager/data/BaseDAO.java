@@ -62,7 +62,7 @@ abstract sealed class BaseDAO<T, TID> permits CompraDAO, UsuarioDAO, ItemDAO {
 		return null;
 	}
 
-	public List<T> findAll() throws SQLException {
+	public List<T> findAll(){
 		List<T> models = new ArrayList<>();
 		final String attrs = String.join(", ", getAttributes(true));
 
@@ -78,7 +78,7 @@ abstract sealed class BaseDAO<T, TID> permits CompraDAO, UsuarioDAO, ItemDAO {
 		return models;
 	}
 
-	public void update(T model) throws SQLException {
+	public void update(T model) {
 		final var attrs = getAttributes(false);
 		final var attrsFotUpdate = String.join(" = ?, ", getAttributes(false));
 		String sql = "UPDATE " + getTableName() + " SET " + attrsFotUpdate + " = ? WHERE " + getAttrId() + " = ?;";
@@ -92,7 +92,7 @@ abstract sealed class BaseDAO<T, TID> permits CompraDAO, UsuarioDAO, ItemDAO {
 		}
 	}
 
-	public void delete(T model) throws SQLException {
+	public void delete(T model) {
 		String sql = "DELETE FROM " + getTableName() + " WHERE " + getAttrId() + " = ?";
 		try (final Connection conn = connFactory.getConnection();
 				final PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -101,6 +101,10 @@ abstract sealed class BaseDAO<T, TID> permits CompraDAO, UsuarioDAO, ItemDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	String attributesToSql() {
+		return String.join(", ", getAttributes(true));
 	}
 
 	abstract List<String> getAttributes(final boolean withId);

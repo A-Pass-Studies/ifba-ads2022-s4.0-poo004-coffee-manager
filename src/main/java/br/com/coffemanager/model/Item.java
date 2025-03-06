@@ -2,6 +2,7 @@ package br.com.coffemanager.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 //Item Model
 public class Item {
@@ -93,5 +94,4 @@ public class Item {
 	public final LocalDateTime getAtualizadoEm() {
 		return atualizadoEm;
 	}
-
 }

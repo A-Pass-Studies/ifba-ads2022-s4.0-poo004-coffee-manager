@@ -10,21 +10,24 @@ import java.util.List;
 public final class ItemDAO extends BaseDAO<Item, Long> {
 	private static ItemDAO instance;
 
+	private final UsuarioDAO usuarioDAO;
+
 	private final static String TABLE_NAME = "estoque.itens";
 	private final static String ATTR_ID = "id";
 	private final static String ATTR_DESCRICAO = "descricao";
 	private final static String ATTR_VALOR_VENDA_ATUAL = "valor_venda_atual";
-	private final static String ATTR_CADASTRO_USUARIO_ID = "cadastro_usuario_id";
+	private final static String ATTR_CADASTRO_USUARIO = "cadastro_usuario_id";
 	private final static String ATTR_CRIADO_EM = "criado_em";
 	private final static String ATTR_ATUALIZADO_EM = "atualizado_em";
 
-	private ItemDAO(final ConnectionFactory connectionFactory) {
+	private ItemDAO(final ConnectionFactory connectionFactory, final UsuarioDAO usuarioDAO) {
 		super(connectionFactory);
+		this.usuarioDAO = usuarioDAO;
 	}
 
-	public static ItemDAO getInstance(final ConnectionFactory connectionFactory) {
+	public static ItemDAO getInstance(final ConnectionFactory connectionFactory, final UsuarioDAO usuarioDAO) {
 		if (instance == null) {
-			instance = new ItemDAO(connectionFactory);
+			instance = new ItemDAO(connectionFactory, usuarioDAO);
 		}
 		return instance;
 	}
@@ -37,7 +40,7 @@ public final class ItemDAO extends BaseDAO<Item, Long> {
 		}
 		attrs.add(ATTR_DESCRICAO);
 		attrs.add(ATTR_VALOR_VENDA_ATUAL);
-		attrs.add(ATTR_CADASTRO_USUARIO_ID);
+		attrs.add(ATTR_CADASTRO_USUARIO);
 		attrs.add(ATTR_CRIADO_EM);
 		attrs.add(ATTR_ATUALIZADO_EM);
 		return attrs;
@@ -50,7 +53,7 @@ public final class ItemDAO extends BaseDAO<Item, Long> {
 
 	@Override
 	Item createModel(final ResultSet rs) throws SQLException {
-		Usuario cadastroUsuario = UsuarioDAO.getInstance(connFactory).findById(rs.getLong(ATTR_CADASTRO_USUARIO_ID));
+		final Usuario cadastroUsuario = usuarioDAO.findById(rs.getLong(ATTR_CADASTRO_USUARIO));
 		return new Item(rs.getLong(ATTR_ID), rs.getString(ATTR_DESCRICAO), rs.getBigDecimal(ATTR_VALOR_VENDA_ATUAL),
 				cadastroUsuario, rs.getTimestamp(ATTR_CRIADO_EM).toLocalDateTime(),
 				rs.getTimestamp(ATTR_ATUALIZADO_EM).toLocalDateTime());
