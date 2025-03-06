@@ -2,6 +2,9 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -10,7 +13,7 @@
 <AnchorPane id="AnchorPane" prefHeight="682.0" prefWidth="800.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.coffemanager.javafx.MainController">
     <children>
         <Label fx:id="lblOut" layoutX="53.0" layoutY="30.0" minHeight="16" minWidth="69" prefHeight="52.0" prefWidth="215.0" />
-      <Text layoutX="191.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerenciador de lanchonete">
+      <Text layoutX="191.0" layoutY="140.0" stroke="BLACK" strokeType="OUTSIDE" text="Gerenciador de lanchonete">
          <font>
             <Font size="35.0" />
          </font>
@@ -19,6 +22,16 @@
          <font>
             <Font size="16.0" />
          </font>
+         <effect>
+            <Lighting diffuseConstant="1.18" specularExponent="24.6">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
       </Button>
       <VBox alignment="TOP_CENTER" layoutX="284.0" layoutY="253.0" spacing="16.0">
          <children>
@@ -26,16 +39,46 @@
                <font>
                   <Font size="20.0" />
                </font>
+               <effect>
+                  <Lighting diffuseConstant="1.18" specularExponent="24.14">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </Button>
             <Button mnemonicParsing="false" onAction="#handleGerenciarCompras" prefHeight="47.0" prefWidth="231.0" text="Gerenciar Compras">
                <font>
                   <Font size="20.0" />
                </font>
+               <effect>
+                  <Lighting diffuseConstant="1.18" specularExponent="24.14">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </Button>
             <Button mnemonicParsing="false" onAction="#handleEstoque" prefHeight="47.0" prefWidth="231.0" text="Estoque">
                <font>
                   <Font size="20.0" />
-               </font></Button>
+               </font>
+               <effect>
+                  <Lighting diffuseConstant="1.18" specularExponent="24.14">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></Button>
          </children>
       </VBox>
     </children>

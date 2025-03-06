@@ -4,6 +4,9 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -14,22 +17,32 @@
     <children>
         <TableView layoutX="82.0" layoutY="213.0" prefHeight="326.0" prefWidth="636.0">
             <columns>
-                <TableColumn prefWidth="175.0" text="Nome" />
-                <TableColumn prefWidth="267.0" text="Quantidade" />
-            <TableColumn prefWidth="193.0" text="Valor" />
+                <TableColumn prefWidth="175.0" style="-fx-background-color: #f0f0f0;" text="Nome" />
+                <TableColumn prefWidth="267.0" style="-fx-background-color: #f0f0f0;" text="Quantidade" />
+            <TableColumn prefWidth="193.0" style="-fx-background-color: #f0f0f0;" text="Valor" />
             </columns>
         </TableView>
-        <Text layoutX="191.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerenciamento de estoque">
+        <Text layoutX="176.0" layoutY="77.0" stroke="BLACK" strokeType="OUTSIDE" text="Gerenciamento de estoque">
             <font>
                 <Font size="35.0" />
             </font>
         </Text>
-        <Button layoutX="52.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleVoltar" text="Voltar">
+        <Button layoutX="31.0" layoutY="39.0" mnemonicParsing="false" onAction="#handleVoltar" prefHeight="32.0" prefWidth="73.0" text="Voltar">
             <font>
                 <Font size="15.0" />
             </font>
+         <effect>
+            <Lighting diffuseConstant="1.18" specularExponent="24.14">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
         </Button>
-      <VBox layoutX="82.0" layoutY="121.0" prefHeight="74.0" prefWidth="636.0">
+      <VBox layoutX="82.0" layoutY="102.0" prefHeight="74.0" prefWidth="636.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Criar item">
                <font>
@@ -40,19 +53,39 @@
                <children>
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="nome do produdo" />
-                        <TextField VBox.vgrow="ALWAYS" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome do produto">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Text>
+                        <TextField prefHeight="25.0" prefWidth="174.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
                   <VBox>
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="valo de venda unitario" />
-                        <TextField VBox.vgrow="ALWAYS" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valor de venda unitário">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Text>
+                        <TextField prefHeight="25.0" prefWidth="199.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
                   <HBox alignment="BOTTOM_CENTER" prefHeight="42.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Criar" HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="89.0" text="Criar" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <effect>
+                              <Lighting diffuseConstant="1.18" specularExponent="24.14">
+                                 <bumpInput>
+                                    <Shadow />
+                                 </bumpInput>
+                                 <light>
+                                    <Light.Distant />
+                                 </light>
+                              </Lighting>
+                           </effect>
+                        </Button>
                      </children>
                   </HBox>
                </children>

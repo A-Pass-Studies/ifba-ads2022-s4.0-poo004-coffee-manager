@@ -4,22 +4,44 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="682.0" prefWidth="800.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.coffemanager.javafx.MainController">
     <children>
-        <Button layoutX="331.0" layoutY="400.0" onAction="#btnClickAction" prefHeight="36.0" prefWidth="137.0" text="Cadastrar" />
+        <Button layoutX="331.0" layoutY="400.0" onAction="#btnClickAction" prefHeight="36.0" prefWidth="137.0" text="Cadastrar">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.18" specularExponent="24.14">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Button>
         <Label fx:id="lblOut" layoutX="53.0" layoutY="30.0" minHeight="16" minWidth="69" prefHeight="52.0" prefWidth="215.0" />
-      <TextField layoutX="279.0" layoutY="250.0" prefHeight="36.0" prefWidth="242.0" />
-      <PasswordField layoutX="281.0" layoutY="329.0" prefHeight="36.0" prefWidth="242.0" />
-      <Text layoutX="261.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cadastro de conta">
+      <TextField layoutX="281.0" layoutY="250.0" prefHeight="36.0" prefWidth="242.0" style="-fx-background-color: white;" />
+      <PasswordField layoutX="281.0" layoutY="329.0" prefHeight="36.0" prefWidth="242.0" style="-fx-background-color: white;" />
+      <Text layoutX="261.0" layoutY="195.0" stroke="BLACK" strokeType="OUTSIDE" text="Cadastro de conta">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <Text layoutX="285.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
-      <Text layoutX="285.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Senha" />
+      <Text layoutX="285.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+         <font>
+            <Font size="15.0" />
+         </font></Text>
+      <Text layoutX="285.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Senha">
+         <font>
+            <Font size="15.0" />
+         </font></Text>
     </children>
 </AnchorPane>
